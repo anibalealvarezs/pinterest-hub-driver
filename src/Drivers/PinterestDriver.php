@@ -2,13 +2,13 @@
 
 namespace Anibalealvarezs\PinterestHubDriver\Drivers;
 
-use Anibalealvarezs\ApiSkeleton\Interfaces\SyncDriverInterface;
-use Anibalealvarezs\ApiSkeleton\Interfaces\AuthProviderInterface;
-use Anibalealvarezs\ApiSkeleton\Traits\HasUpdatableCredentials;
+use Anibalealvarezs\ApiDriverCore\Interfaces\SyncDriverInterface;
+use Anibalealvarezs\ApiDriverCore\Interfaces\AuthProviderInterface;
+use Anibalealvarezs\ApiDriverCore\Traits\HasUpdatableCredentials;
 use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerInterface;
 use DateTime;
-use Anibalealvarezs\ApiSkeleton\Interfaces\SeederInterface;
+use Anibalealvarezs\ApiDriverCore\Interfaces\SeederInterface;
 
 class PinterestDriver implements SyncDriverInterface
 {
@@ -90,6 +90,17 @@ class PinterestDriver implements SyncDriverInterface
     }
     public function boot(): void
     {
+    }
+
+    public function getAssetPatterns(): array
+    {
+        return [
+            'pinterest_profile' => [
+                'prefix' => 'pn:profile',
+                'hostnames' => ['pinterest.com'],
+                'url_id_regex' => null
+            ]
+        ];
     }
 }
 
