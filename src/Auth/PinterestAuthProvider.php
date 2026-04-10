@@ -2,7 +2,7 @@
 
 namespace Anibalealvarezs\PinterestHubDriver\Auth;
 
-use Anibalealvarezs\ApiDriverCore\Interfaces\AuthProviderInterface;
+use Anibalealvarezs\ApiSkeleton\Interfaces\AuthProviderInterface;
 
 class PinterestAuthProvider implements AuthProviderInterface
 {
