@@ -12,6 +12,7 @@ use Anibalealvarezs\ApiDriverCore\Interfaces\SeederInterface;
 
 class PinterestDriver implements SyncDriverInterface
 {
+    use \Anibalealvarezs\ApiDriverCore\Traits\SyncDriverTrait;
 
     /**
      * Store credentials for this driver.
@@ -176,6 +177,16 @@ class PinterestDriver implements SyncDriverInterface
                 'hostnames' => ['pinterest.com'],
                 'url_id_regex' => null
             ]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getPageTypes(): array
+    {
+        return [
+            'pinterest_profile' => 'Pinterest Profile'
         ];
     }
 
