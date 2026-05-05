@@ -9,10 +9,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerInterface;
 use DateTime;
 use Anibalealvarezs\ApiDriverCore\Interfaces\SeederInterface;
+use Anibalealvarezs\ApiDriverCore\Interfaces\CanonicalMetricDictionaryProviderInterface;
+use Anibalealvarezs\ApiDriverCore\Interfaces\AggregationProfileProviderInterface;
+use Anibalealvarezs\ApiDriverCore\Classes\AggregationProfileTemplates;
 
-class PinterestDriver implements SyncDriverInterface
+class PinterestDriver implements SyncDriverInterface, CanonicalMetricDictionaryProviderInterface, AggregationProfileProviderInterface
 {
     use \Anibalealvarezs\ApiDriverCore\Traits\SyncDriverTrait;
+
+    public static function getAggregationProfiles(): array
+    {
+        return [
+            AggregationProfileTemplates::adsHierarchyProfile(
+                channel: 'pinterest',
+                key: 'pinterest_ads',
+                label: 'Pinterest Ads Performance'
+            ),
+        ];
+    }
 
     /**
      * Store credentials for this driver.
@@ -199,6 +213,25 @@ class PinterestDriver implements SyncDriverInterface
         return [
             'pinterest_profile' => 'Pinterest Profile'
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getCanonicalMetricDictionary(): array
+    {
+        return [
+            'spend' => ['spend_in_micro_dollar'],
+            'clicks' => ['clickthrough_1', 'clickthrough_2'],
+            'impressions' => ['impression_1', 'impression_2'],
+            'conversions' => ['total_conversions'],
+            'reach' => ['reach'],
+        ];
+    }
+
+    public static function getPlatformEntityIdField(): string
+    {
+        return 'ad_account_id';
     }
 
     /**
